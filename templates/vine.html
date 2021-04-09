@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ vine.name }} {{ vine.producer }}
+{% endblock %}
+
+
+{% block header %}
+{{ vine.name }} {{ vine.producer }}
+{% endblock %}
+
+{% block content %}
+{% set picture = 'red.png' if 'красное' in vine.sort.name else 'white.png' %}
+<div class="col-2">
+    <img class="img-fluid" src="{{ url_for('static', filename='img/' + picture) }}">
+</div>
+<div class="col-2">
+    <h4>{{vine.sort}}</h4>
+</div>
+<div class="col-2">
+    <h3>{{ '%.2f'|format(vine.price) }} грн.</h3>
+</div>
+
+<div class="col-4">
+    <h3>Комментарии</h3>
+    {% if vine.comments %}
+        {% for comment in vine.comments %}
+        <p>{{comment}}</p>
+        {%endfor%}
+    {% else %}
+    <p>комментариев нет</p>
+    {%endif%}
+    <a href="{{ url_for('comment', vine_id=vine.id) }}">Комментировать</a>
+</div>
+<div class="col-2">
+<a href="{{ url_for('config', vine_id=vine.id) }}">config</a>
+</div>
+{% endblock %}

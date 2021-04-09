@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Изменение {{ vine.name }} {{ vine.producer }}
+{% endblock %}
+
+
+{% block header %}
+Изменение параметров {{ vine.name }} {{ vine.producer }}
+{% endblock %}
+
+{% block content %}
+<div class="col-3">
+<form method="post" action="{{ url_for('configform', vine_id=vine.id) }}"
+      onsubmit="return confirm('Вы уверены?');">
+
+    <div class="form-group">
+    <label >название</label>
+    <input type="text" class="form-control" value="{{ vine.name }}" name="name">
+    </div>
+
+    <div class="form-group">
+    <label >цена</label>
+    <input type="number" step="0.01" class="form-control" value="{{ vine.price }}" name="price">
+    </div>
+
+     <div class="form-group">
+    <label>производитель</label>
+    <select class="form-control" name="producer_id">
+    {% for producer in producers %}
+    {% set selected = 'selected' if vine.producer == producer else '' %}
+    <option value="{{ producer.id }}" {{ selected }}>{{ producer }}</option>
+    {%endfor%}
+    </select>
+    </div>
+
+    <div class="form-group">
+    <label>сорт</label>
+    <select class="form-control" name="sort_id">
+    {% for sort in sorts %}
+    {% set selected = 'selected' if vine.sort == sort else '' %}
+    <option value="{{ sort.id }}" {{ selected }}>{{ sort }}</option>
+    {%endfor%}
+    </select>
+    </div>
+
+    <div class="form-check">
+    {% set selected = 'checked' if vine.bestseller else '' %}
+    <input type="checkbox" class="form-check-input" name="bestseller" {{ selected }}>
+    <label class="form-check-label" >хит продаж</label>
+    </div>
+
+<button type="submit" class="btn btn-primary">сохранить изменение</button>
+</form>
+    <a href="{{ url_for('delete', vine_id=vine.id) }}" class="btn btn-danger">Удалить</a>
+</div>
+{% endblock %}

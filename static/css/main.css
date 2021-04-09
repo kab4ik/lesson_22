@@ -1,0 +1,12 @@
+.bestseller {
+    position: relative;
+}
+.bestseller::after {
+    content: '';
+    width: 70px;
+    height: 60px;
+    position: absolute;
+    right: -10px; top: -10px;
+    background: url('../img/best.png');
+    background-size: 100%;
+}
